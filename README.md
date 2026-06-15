@@ -1,12 +1,11 @@
 # supso (Python)
 
-Offline license checks for your project, from
-[Supported Source](https://supso.org).
+Supported Source license checks for your project, from [Supported Source](https://supso.org).
 
-Add one call at startup to confirm the person running your software holds a valid
-license for it. The check is **100% offline** — no network, no license server to
-run, nothing phoning home. And the library **never shuts your app down**: it
-tells you the result and you decide what to do.
+Use this library to enforce licensing, so you'll know who is using your project, and can
+be sure they're paying for your paid licenses. It's just one call at startup to confirm 
+the code running your software holds a valid license. The check is 100% offline, so there's
+no network, no license server to run, nothing phoning home. 
 
 ```python
 import supso
@@ -29,21 +28,18 @@ import supso
 
 ## Usage
 
-### Hard enforcement (raises)
+### Hard enforcement (raises when missing license)
+
+This is what we suggest you do.
 
 ```python
 import supso
-
-try:
-    license = supso.require_license("acme-db")
-    print(f"licensed to {license.organization.name}, {license.seats()} seats")
-except supso.SupsoError as e:
-    # e.code is the canonical reason: "expired", "wrong_project", "no_certificate", …
-    print(f"license check failed ({e.code}): {e}")
-    # your app decides whether to degrade, nag, or exit — the library never does.
+supso.require_license("acme-db")
 ```
 
-### Soft enforcement (never raises)
+### Soft enforcement (does not raise errors)
+
+If you would like to handle it yourself, use `is_licensed` and then write your own logic.
 
 ```python
 import supso
@@ -55,40 +51,6 @@ if supso.is_licensed(status):
 
 `status` is one of `supso.Valid`, `supso.Grace`, or `supso.Unlicensed`
 (distinguish via `status.kind` or `isinstance`).
-
-### Configure once, then call bare
-
-```python
-import supso
-
-supso.initialize_project("acme-db", grace_period_days=30)
-license = supso.require_license()   # uses the configured project
-status = supso.check_license()
-```
-
-### Gate on tier, seats, or features
-
-```python
-from supso import Supso
-
-license = (
-    Supso.project("acme-db")
-    .require_tier("enterprise")
-    .require_seats(25)
-    .require_feature("audit-log")
-    .grace_period_days(30)
-    .certificate_path("/etc/acme/license.cert")  # optional explicit path
-    .verify()
-)
-```
-
-### Verify a raw token
-
-```python
-import supso
-
-license = supso.verify_token(token_string, "acme-db")  # no disk search, no grace
-```
 
 ## Where licenses are found
 
