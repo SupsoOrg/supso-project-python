@@ -1,0 +1,35 @@
+# Byte-compiled / build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+.env
+
+# Test / tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editor / tooling
+.idea
+.vscode
+.claude
+.gstack
+
+# macOS
+.DS_Store
+
+# Local scratch / notes
+/thoughts
+thoughts/
+
+# License certificates written during local testing
+/.supso/

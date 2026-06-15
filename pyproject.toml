@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "supso-project"
+version = "1.0.0"
+description = "Offline hybrid (Ed25519 + ML-DSA-44) software-license verification for project maintainers — Supported Source."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE-APACHE"]
+keywords = ["license", "licensing", "supported-source", "ed25519", "ml-dsa", "verification"]
+authors = [{ name = "Supso" }]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    # Pre-quantum half of the hybrid signature.
+    "cryptography>=42",
+    # Post-quantum half: ML-DSA-44 (FIPS 204). Pure Python — no FFI, no C toolchain.
+    "dilithium-py>=1.1",
+]
+
+[project.urls]
+Homepage = "https://supso.org"
+Repository = "https://github.com/SupsoOrg/supso-project-python"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/supso"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
