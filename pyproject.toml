@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "supso-project"
 version = "1.0.0"
-description = "Offline hybrid (Ed25519 + ML-DSA-44) software-license verification for project maintainers — Supported Source."
+description = "License verification for Python project using Supported Source."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE-APACHE"]
-keywords = ["license", "licensing", "supported-source", "ed25519", "ml-dsa", "verification"]
+keywords = ["license", "licensing", "supported-source", "verification"]
 authors = [{ name = "Supso" }]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
