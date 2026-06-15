@@ -1,0 +1,27 @@
+name: Release
+
+# Publishes to PyPI when you publish a GitHub Release. Uses PyPI Trusted
+# Publishing (OIDC) — no API token is stored anywhere. See RELEASING.md for the
+# one-time trusted-publisher setup on PyPI.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write   # required for trusted publishing (OIDC)
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Build wheel + sdist
+        run: uv build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
